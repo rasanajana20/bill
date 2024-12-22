@@ -9,156 +9,106 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f4f4f4;
         }
-
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
         h1 {
             text-align: center;
             color: #333;
-            margin: 20px 0;
+            font-size: 24px;
         }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
         .form-group {
             display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
         }
-
-        .form-group label {
-            margin-bottom: 5px;
-        }
-
         .form-group input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%;
+            padding: 10px;
+            width: calc(50% - 10px);
+            font-size: 14px;
+            box-sizing: border-box;
         }
-
-        .buttons {
-            text-align: center;
+        button {
+            padding: 10px;
             margin-top: 10px;
-        }
-
-        .buttons button {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 4px;
+            font-size: 14px;
             cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
+            border: none;
+            border-radius: 5px;
             width: 100%;
         }
-
-        .buttons button:hover {
-            background-color: #0056b3;
-        }
-
+        .add-btn { background-color: #4CAF50; color: white; }
+        .delete-btn { background-color: #f44336; color: white; }
+        .clear-btn { background-color: #ff9800; color: white; }
+        .print-btn { background-color: #2196F3; color: white; }
+        .save-btn { background-color: #9c27b0; color: white; }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-
         table, th, td {
             border: 1px solid #ddd;
+            text-align: left;
         }
-
         th, td {
-            padding: 10px;
-            text-align: center;
+            padding: 8px;
             font-size: 14px;
         }
-
-        th {
-            background-color: #f8f9fa;
-        }
-
-        .footer-buttons {
+        .button-group {
             text-align: center;
             margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
         }
 
-        .footer-buttons button {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            background-color: #28a745;
-            color: white;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        .footer-buttons button:hover {
-            background-color: #218838;
-        }
-
-        .footer-buttons .save-btn {
-            background-color: #17a2b8;
-        }
-
-        .footer-buttons .save-btn:hover {
-            background-color: #117a8b;
-        }
-
-        @media (max-width: 768px) {
-            .form-group label, .form-group input {
-                font-size: 14px;
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .form-group input {
+                width: 100%;
             }
-
-            .buttons button, .footer-buttons button {
-                font-size: 14px;
-                padding: 8px;
+            button {
+                width: 100%;
+                padding: 12px;
             }
-
-            th, td {
-                font-size: 12px;
-                padding: 8px;
+            h1 {
+                font-size: 20px;
+            }
+            .button-group button {
+                width: 48%;
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Shop Bill System</h1>
-
+        
         <div class="form-group">
-            <label for="itemNo">Item No:</label>
-            <input type="text" id="itemNo" placeholder="Enter Item No">
-        </div>
-
-        <div class="form-group">
-            <label for="productName">Product Name:</label>
-            <input type="text" id="productName" placeholder="Enter Product Name">
-        </div>
-
-        <div class="form-group">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" placeholder="Enter Quantity">
-        </div>
-
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" id="price" placeholder="Enter Price">
-        </div>
-
-        <div class="buttons">
-            <button onclick="addItem()">Add</button>
-            <button onclick="deleteItem()">Delete</button>
-            <button onclick="clearFields()">Clear</button>
+            <input type="text" id="itemNo" placeholder="Item No" />
+            <input type="text" id="productName" placeholder="Product Name" />
+            <input type="number" id="quantity" placeholder="Quantity" />
+            <input type="number" id="price" placeholder="Price" />
+            <button class="add-btn" onclick="addItem()">Add</button>
         </div>
 
         <table id="billTable">
@@ -169,60 +119,89 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Item rows will go here -->
             </tbody>
         </table>
 
-        <div class="footer-buttons">
-            <button onclick="printBill()">Print</button>
+        <div class="total">
+            Total: <span id="totalAmount">0</span>
+        </div>
+
+        <div class="button-group">
+            <button class="delete-btn" onclick="deleteItem()">Delete</button>
+            <button class="clear-btn" onclick="clearItems()">Clear</button>
+            <button class="print-btn" onclick="printBill()">Print</button>
             <button class="save-btn" onclick="saveBill()">Save</button>
         </div>
     </div>
 
     <script>
+        let items = [];
+
         function addItem() {
             const itemNo = document.getElementById('itemNo').value;
             const productName = document.getElementById('productName').value;
-            const quantity = document.getElementById('quantity').value;
-            const price = document.getElementById('price').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const price = parseFloat(document.getElementById('price').value);
 
-            if (itemNo && productName && quantity && price) {
-                const table = document.getElementById('billTable').querySelector('tbody');
-                const row = document.createElement('tr');
-
-                const total = quantity * price;
-
-                row.innerHTML = `
-                    <td>${itemNo}</td>
-                    <td>${productName}</td>
-                    <td>${quantity}</td>
-                    <td>${price}</td>
-                    <td>${total.toFixed(2)}</td>
-                `;
-
-                table.appendChild(row);
-                clearFields();
-            } else {
-                alert('Please fill in all fields.');
+            if (!itemNo || !productName || isNaN(quantity) || isNaN(price)) {
+                alert('Please fill all fields');
+                return;
             }
+
+            const total = quantity * price;
+            items.push({ itemNo, productName, quantity, price, total });
+
+            updateTable();
+            updateTotal();
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.itemNo}</td>
+                    <td>${item.productName}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price.toFixed(2)}</td>
+                    <td>${item.total.toFixed(2)}</td>
+                    <td><button onclick="removeItem(${index})">Remove</button></td>
+                `;
+            });
+        }
+
+        function removeItem(index) {
+            items.splice(index, 1);
+            updateTable();
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const totalAmount = items.reduce((sum, item) => sum + item.total, 0);
+            document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
         }
 
         function deleteItem() {
-            const table = document.getElementById('billTable').querySelector('tbody');
-            if (table.rows.length > 0) {
-                table.deleteRow(table.rows.length - 1);
-            } else {
-                alert('No items to delete.');
+            const selectedRow = document.querySelector('tr.selected');
+            if (selectedRow) {
+                const index = Array.from(selectedRow.parentNode.children).indexOf(selectedRow);
+                items.splice(index, 1);
+                updateTable();
+                updateTotal();
             }
         }
 
-        function clearFields() {
-            document.getElementById('itemNo').value = '';
-            document.getElementById('productName').value = '';
-            document.getElementById('quantity').value = '';
-            document.getElementById('price').value = '';
+        function clearItems() {
+            items = [];
+            updateTable();
+            updateTotal();
         }
 
         function printBill() {
@@ -230,8 +209,15 @@
         }
 
         function saveBill() {
-            alert('Bill saved successfully.');
+            const billData = JSON.stringify(items);
+            const blob = new Blob([billData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'bill.json';
+            a.click();
         }
     </script>
+
 </body>
 </html>
