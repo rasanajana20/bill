@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Bill System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .footer-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .footer-buttons button:hover {
+            background-color: #218838;
+        }
+
+        .footer-buttons .save-btn {
+            background-color: #17a2b8;
+        }
+
+        .footer-buttons .save-btn:hover {
+            background-color: #117a8b;
+        }
+
+        @media (max-width: 768px) {
+            .form-group label, .form-group input {
+                font-size: 14px;
+            }
+
+            .buttons button, .footer-buttons button {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            th, td {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shop Bill System</h1>
+
+        <div class="form-group">
+            <label for="itemNo">Item No:</label>
+            <input type="text" id="itemNo" placeholder="Enter Item No">
+        </div>
+
+        <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" placeholder="Enter Product Name">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" placeholder="Enter Quantity">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" placeholder="Enter Price">
+        </div>
+
+        <div class="buttons">
+            <button onclick="addItem()">Add</button>
+            <button onclick="deleteItem()">Delete</button>
+            <button onclick="clearFields()">Clear</button>
+        </div>
+
+        <table id="billTable">
+            <thead>
+                <tr>
+                    <th>Item No</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div class="footer-buttons">
+            <button onclick="printBill()">Print</button>
+            <button class="save-btn" onclick="saveBill()">Save</button>
+        </div>
+    </div>
+
+    <script>
+        function addItem() {
+            const itemNo = document.getElementById('itemNo').value;
+            const productName = document.getElementById('productName').value;
+            const quantity = document.getElementById('quantity').value;
+            const price = document.getElementById('price').value;
+
+            if (itemNo && productName && quantity && price) {
+                const table = document.getElementById('billTable').querySelector('tbody');
+                const row = document.createElement('tr');
+
+                const total = quantity * price;
+
+                row.innerHTML = `
+                    <td>${itemNo}</td>
+                    <td>${productName}</td>
+                    <td>${quantity}</td>
+                    <td>${price}</td>
+                    <td>${total.toFixed(2)}</td>
+                `;
+
+                table.appendChild(row);
+                clearFields();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function deleteItem() {
+            const table = document.getElementById('billTable').querySelector('tbody');
+            if (table.rows.length > 0) {
+                table.deleteRow(table.rows.length - 1);
+            } else {
+                alert('No items to delete.');
+            }
+        }
+
+        function clearFields() {
+            document.getElementById('itemNo').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('price').value = '';
+        }
+
+        function printBill() {
+            window.print();
+        }
+
+        function saveBill() {
+            alert('Bill saved successfully.');
+        }
+    </script>
+</body>
+</html>
